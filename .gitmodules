@@ -1,3 +1,9 @@
 [submodule "OneDrive/Desktop/self/solidity-course/foundry-f23/foundry-fund-me-f23/lib/foundry-devops"]
 	path = OneDrive/Desktop/self/solidity-course/foundry-f23/foundry-fund-me-f23/lib/foundry-devops
 	url = https://github.com/cyfrin/foundry-devops
+[submodule "OneDrive/Desktop/self/solidity-course/foundry-f23/foundry-fund-me-f23/lib/chainlink-brownie-contracts"]
+	path = OneDrive/Desktop/self/solidity-course/foundry-f23/foundry-fund-me-f23/lib/chainlink-brownie-contracts
+	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
+[submodule "OneDrive/Desktop/self/solidity-course/foundry-f23/foundry-fund-me-f23/lib/forge-std"]
+	path = OneDrive/Desktop/self/solidity-course/foundry-f23/foundry-fund-me-f23/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
