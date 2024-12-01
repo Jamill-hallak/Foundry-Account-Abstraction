@@ -1,0 +1,3 @@
+[submodule "OneDrive/Desktop/self/solidity-course/foundry-f23/foundry-fund-me-f23/lib/foundry-devops"]
+	path = OneDrive/Desktop/self/solidity-course/foundry-f23/foundry-fund-me-f23/lib/foundry-devops
+	url = https://github.com/cyfrin/foundry-devops
