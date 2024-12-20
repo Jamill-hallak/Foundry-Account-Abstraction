@@ -40,3 +40,6 @@
 [submodule "lib/openzeppelin-contracts"]
 	path = lib/openzeppelin-contracts
 	url = https://github.com/openzeppelin/openzeppelin-contracts
+[submodule "OneDrive/Desktop/self/solidity-course/foundry-account-abstraction/lib/openzeppelin-contracts"]
+	path = OneDrive/Desktop/self/solidity-course/foundry-account-abstraction/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts

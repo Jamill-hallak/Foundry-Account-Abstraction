@@ -13,12 +13,17 @@ contract MinimalAccount is IAccount,Ownable {
      
      IEntryPoint private immutable  i_entryPoint;
 
+
+    /*//////////////////////////////////////////////////////////////
+                               Errors
+    //////////////////////////////////////////////////////////////*/
+
      error MinimalAccount__NotFromEntryPoint();
      error MinimalAccount__NotFromEntryPointOrOwner();
      error MiniamlAccount__CallFailed(bytes);
 
     constructor(address entryPoint) Ownable(msg.sender){
-        i_entryPoint = IEntryPoint(entryPoint)
+        i_entryPoint = IEntryPoint(entryPoint);
 
     }
 
@@ -38,9 +43,16 @@ contract MinimalAccount is IAccount,Ownable {
             revert MinimalAccount__NotFromEntryPointOrOwner();
         }
         _;
+        }
 
      /*//////////////////////////////////////////////////////////////
                                FUNCTIONS
+    //////////////////////////////////////////////////////////////*/
+
+
+
+/*//////////////////////////////////////////////////////////////
+                               External
     //////////////////////////////////////////////////////////////*/
 
 function validateUserOp(PackedUserOperation calldata userOp,bytes32 userOpHash,
@@ -62,10 +74,14 @@ requireFromEntryPointOrOwner {
     
 }
 
+     /*//////////////////////////////////////////////////////////////
+                               Internal
+    //////////////////////////////////////////////////////////////*/
+
 function _validateSignature(PackedUserOperation calldata userOp,bytes32 userOpHash ) 
 internal view returns(uint256 validationData){
      bytes32 ethSignedMessageHash = MessageHashUtils.toEthSignedMessageHash(userOpHash);
-     address signer = ECDSA.recover(ethSignedMessageHash,PackedUserOperation.signature);
+     address signer = ECDSA.recover(ethSignedMessageHash,userOp.signature);
      if(signer != owner()){
         return SIG_VALIDATION_FAILED;
      }
