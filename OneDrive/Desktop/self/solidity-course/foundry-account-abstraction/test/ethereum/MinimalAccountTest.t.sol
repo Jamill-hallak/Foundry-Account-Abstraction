@@ -30,7 +30,7 @@ uint256 constant AMOUNT = 1e18;
     }
 
 
-    // USDC Mint
+    // USDC Mint      
     // msg.sender -> MinimalAccount
     // approve some amount
     // USDC contract
@@ -66,7 +66,7 @@ function testNonOwnerCannotExecuteCommands() public  {
         bytes memory functionData = abi.encodeWithSelector(ERC20Mock.mint.selector, address(minimalAccount), AMOUNT);
         bytes memory excuteData = abi.encodeWithSelector(MinimalAccount.execute.selector,dest,value, functionData);
         PackedUserOperation memory PackedUserOp =sendPackedUserOp.generateSignedUserOperation(
-            excuteData,helperConfig.getConfig()
+            excuteData,helperConfig.getConfig(),address(minimalAccount)
         );
       bytes32 userOperationHash = IEntryPoint(helperConfig.getConfig().entryPoint).getUserOpHash(PackedUserOp);
         
@@ -100,7 +100,7 @@ function testNonOwnerCannotExecuteCommands() public  {
         bytes memory executeCallData =
             abi.encodeWithSelector(MinimalAccount.execute.selector, dest, value, functionData);
         PackedUserOperation memory packedUserOp = sendPackedUserOp.generateSignedUserOperation(
-            executeCallData, helperConfig.getConfig()
+            executeCallData, helperConfig.getConfig(),address(minimalAccount)
         );
         
         bytes32 userOperationHash = IEntryPoint(helperConfig.getConfig().entryPoint).getUserOpHash(packedUserOp);
@@ -113,7 +113,29 @@ function testNonOwnerCannotExecuteCommands() public  {
 }
 
 
+function testEntryPointCanExecuteCommands() public {
+    // Arrange
+    assertEq(usdc.balanceOf(address(minimalAccount)), 0);
+    address dest = address(usdc);
+    uint256 value = 0;
+    bytes memory functionData = abi.encodeWithSelector(ERC20Mock.mint.selector, address(minimalAccount), AMOUNT);
+    bytes memory executeCallData =
+        abi.encodeWithSelector(MinimalAccount.execute.selector, dest, value, functionData);
+    PackedUserOperation memory packedUserOp = sendPackedUserOp.generateSignedUserOperation(
+        executeCallData, helperConfig.getConfig(),address(minimalAccount));
+    //bytes32 userOperationHash = IEntryPoint(helperConfig.getConfig().entryPoint).getUserOpHash(packedUserOp);
+    vm.deal(address(minimalAccount), 1e18);
 
+    PackedUserOperation[] memory ops = new PackedUserOperation[](1);
+    ops[0] = packedUserOp;
+
+    // Act
+    vm.prank(randomuser);
+    IEntryPoint(helperConfig.getConfig().entryPoint).handleOps(ops, payable(randomuser));
+
+    // Assert
+    assertEq(usdc.balanceOf(address(minimalAccount)), AMOUNT);
+}
 
 
 }
