@@ -30,12 +30,12 @@ struct NetworkConfig {
 
     }
 
-    function getConfig()public view  returns(NetworkConfig memory) {
+    function getConfig()public   returns(NetworkConfig memory) {
 
        return getConfigByChainId(block.chainid);
     }
 
-    function getConfigByChainId(uint256 chainId) public view returns(NetworkConfig memory){
+    function getConfigByChainId(uint256 chainId) public  returns(NetworkConfig memory){
        if (chainId == LOCAL_CHAIN_ID) {
             return getOrCreateAnvilEthConfig();
         } else if (networkConfigs[chainId].account != address(0)) {
@@ -59,12 +59,19 @@ struct NetworkConfig {
         });
 
     }
-    function getOrCreateAnvilEthConfig() public view returns(NetworkConfig memory){
+    function getOrCreateAnvilEthConfig() public  returns(NetworkConfig memory){
         if (networkConfigs[LOCAL_CHAIN_ID].account != address(0)){
             return networkConfigs[LOCAL_CHAIN_ID];
         }
-        return NetworkConfig({  entryPoint : address(0),
-        account : ANVIL_DEFAULT_ACCOUNT});
+        
+        console2.log("Deploying EntryPoint mock......");
+        vm.prank(ANVIL_DEFAULT_ACCOUNT);
+        EntryPoint entrypoint = new EntryPoint();
+        networkConfigs[LOCAL_CHAIN_ID]=NetworkConfig({entryPoint:address(entrypoint), account : ANVIL_DEFAULT_ACCOUNT});
+
+        return networkConfigs[LOCAL_CHAIN_ID] ;
+        // return NetworkConfig({  entryPoint : address(entryPoint),
+        // account : ANVIL_DEFAULT_ACCOUNT});
         
     }
 }
