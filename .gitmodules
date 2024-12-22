@@ -46,3 +46,6 @@
 [submodule "OneDrive/Desktop/self/solidity-course/foundry-account-abstraction/lib/foundry-era-contracts"]
 	path = OneDrive/Desktop/self/solidity-course/foundry-account-abstraction/lib/foundry-era-contracts
 	url = https://github.com/cyfrin/foundry-era-contracts
+[submodule "OneDrive/Desktop/self/solidity-course/foundry-account-abstraction/lib/foundry-devops"]
+	path = OneDrive/Desktop/self/solidity-course/foundry-account-abstraction/lib/foundry-devops
+	url = https://github.com/Cyfrin/foundry-devops
