@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+ //@ToDO TEST executeTransactionFromOutside 
 pragma solidity 0.8.24;
 
 import {Test, console2} from "forge-std/Test.sol";
@@ -55,6 +56,9 @@ contract ZkMinimalAccountTest is Test, ZkSyncChainChecker {
         // Assert
         assertEq(usdc.balanceOf(address(minimalAccount)), AMOUNT);
     }
+
+   
+
   function testZkValidateTransaction() public {
 
   // Arrange
